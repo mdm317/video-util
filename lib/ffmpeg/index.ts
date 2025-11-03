@@ -4,6 +4,14 @@ import { toBlobURL } from "@ffmpeg/util";
 export const initFFmpeg = () => {
   const ffmpeg = new FFmpeg();
 
+  // ffmpeg.on("log", ({ type, message }) => {
+  //   console.log(`[${type}] ${message}`);
+  // });
+
+  // ffmpeg.on("progress", ({ progress }) => {
+  //   console.log(`Progress: ${(progress * 100).toFixed(1)}%`);
+  // });
+
   return ffmpeg;
 };
 const baseURL = "https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.10/dist/umd";
