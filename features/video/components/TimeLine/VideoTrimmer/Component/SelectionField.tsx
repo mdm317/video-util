@@ -13,11 +13,13 @@ export const SelectionField = ({
 
   return (
     <div
-      className="bg-amber-300 h-full absolute"
+      className="absolute inset-y-0 pointer-events-none"
       style={{
         left,
         right,
       }}
-    ></div>
+    >
+      <div className="h-full w-full rounded-md bg-primary/10 shadow-sm" />
+    </div>
   );
 };
