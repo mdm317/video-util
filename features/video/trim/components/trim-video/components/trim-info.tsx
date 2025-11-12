@@ -1,3 +1,4 @@
+import { round } from "@/lib/math";
 import React from "react";
 
 type TrimInfoProp = {
@@ -7,7 +8,12 @@ type TrimInfoProp = {
 function TrimInfo({ startSeconds, endSeconds }: TrimInfoProp) {
   const startTimeStr = startSeconds ?? "-";
   const endTimeStr = endSeconds ?? "-";
-  const durationStr = startSeconds ?? endSeconds ?? "-";
+  const durationStr =
+    startSeconds != null
+      ? endSeconds != null
+        ? round(endSeconds - startSeconds, 1)
+        : "-"
+      : "-";
   return (
     <div className="grid grid-cols-3 gap-4">
       <div className="bg-slate-900/50 rounded-lg border border-slate-700 p-4">

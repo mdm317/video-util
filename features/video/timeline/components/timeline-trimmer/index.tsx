@@ -1,4 +1,4 @@
-import { Dispatch, memo, SetStateAction, useRef, useState } from "react";
+import { memo, useRef, useState } from "react";
 import { useSize } from "@/hooks/use-size";
 import { Overlay } from "./components/overlay";
 import { DraggableRangeSelector } from "./components/draggable-range-selector";
@@ -8,7 +8,7 @@ const MINIMUM_PERCENT = 3;
 
 type VideoTrimmerProp = {
   rangePercent: [number, number];
-  setRangePercent: Dispatch<SetStateAction<[number, number]>>;
+  setRangePercent: (range: [number, number]) => void;
 };
 type DragId = "left" | "right" | "both";
 function VideoTrimmer({ rangePercent, setRangePercent }: VideoTrimmerProp) {

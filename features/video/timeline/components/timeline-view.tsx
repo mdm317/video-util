@@ -2,19 +2,19 @@
 
 import { useSize } from "@/hooks/use-size";
 import React, { useEffect, useMemo, useRef } from "react";
-import { useVideoThumbnails } from "../../api/useVideoThumbnails";
 import { Loader } from "lucide-react";
+import { useTimelineThumbnails } from "@/features/video/timeline/api/use-timeline-thumbnails";
 
 type TimeLineViewProps = {
   videoFile: File;
   videoElement?: HTMLVideoElement;
 };
 
-function TimeLineView({ videoFile, videoElement }: TimeLineViewProps) {
+function TimelineView({ videoFile, videoElement }: TimeLineViewProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const size = useSize(containerRef);
 
-  const { data: thumbnails, mutate } = useVideoThumbnails();
+  const { data: thumbnails, mutate } = useTimelineThumbnails();
 
   const thumbnailData = useMemo(() => {
     if (!size || !videoElement) {
@@ -88,4 +88,4 @@ function TimeLineView({ videoFile, videoElement }: TimeLineViewProps) {
   );
 }
 
-export default TimeLineView;
+export default TimelineView;

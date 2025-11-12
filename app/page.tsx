@@ -1,5 +1,4 @@
 "use client";
-import { useFFmpeg } from "@/features/video/api/loadFFmpeg";
 import { useCallback, useState } from "react";
 
 export default function Home() {

@@ -1,5 +1,5 @@
+import { useFFmpegQueryOption } from "@/features/video";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useFFmpegQueryOption } from "./loadFFmpeg";
 
 type VideoThumbnailProp = {
   file: File;
@@ -8,7 +8,7 @@ type VideoThumbnailProp = {
   neededFrame: number;
 };
 
-export const useVideoThumbnails = () => {
+export const useTimelineThumbnails = () => {
   const client = useQueryClient();
   return useMutation({
     mutationFn: async ({
