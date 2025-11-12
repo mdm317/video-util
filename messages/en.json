@@ -1,0 +1,30 @@
+{
+  "Metadata": {
+    "title": "Video Toolkit",
+    "description": "Trim and export your clips in seconds."
+  },
+  "Trim": {
+    "upload": {
+      "cta": "Upload your video here",
+      "replace": "Click or drag to pick a different video",
+      "helper": "Supports MP4, MOV and other common formats. You can only select one file."
+    },
+    "info": {
+      "start": "Start Time",
+      "duration": "Duration",
+      "end": "End Time"
+    },
+    "controls": {
+      "play": "Play",
+      "pause": "Pause",
+      "export": "Export",
+      "exporting": "Preparing export..."
+    }
+  },
+  "Home": {
+    "eyebrow": "Video tools",
+    "title": "Your multilingual video workbench",
+    "description": "Trim, preview and export clips from any modern browser.",
+    "cta": "Open the trim tool"
+  }
+}

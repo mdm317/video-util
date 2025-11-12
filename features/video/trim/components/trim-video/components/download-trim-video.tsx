@@ -7,11 +7,15 @@ type DownloadTrimVideoProp = {
   startSeconds: number;
   endSeconds: number;
   file: File;
+  label: string;
+  loadingLabel: string;
 };
 function DownloadTrimVideo({
   startSeconds,
   endSeconds,
   file,
+  label,
+  loadingLabel,
 }: DownloadTrimVideoProp) {
   const { mutateAsync, isPending } = useTrimVideo();
   const handleDownload = () => {
@@ -40,12 +44,13 @@ function DownloadTrimVideo({
     >
       {isPending ? (
         <>
-          <Loader />
+          <Loader className="w-4 h-4 mr-2 animate-spin" />
+          {loadingLabel}
         </>
       ) : (
         <>
           <Download className="w-4 h-4 mr-2" />
-          Export
+          {label}
         </>
       )}
     </Button>

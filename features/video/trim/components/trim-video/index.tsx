@@ -11,6 +11,7 @@ import {
 } from "@/features/video/timeline";
 import TrimInfo from "./components/trim-info";
 import DownloadTrimVideo from "./components/download-trim-video";
+import { useTranslations } from "next-intl";
 
 type TrimVideoProp = {
   file: File;
@@ -18,6 +19,7 @@ type TrimVideoProp = {
 function TrimVideo({ file }: TrimVideoProp) {
   const { isPlay, props, videoElement, pause, setIsPlay, setVideoTime } =
     useVideo(file);
+  const t = useTranslations("Trim.controls");
 
   const onEnded = () => {
     setVideoTime(startSeconds ?? 0);
@@ -105,12 +107,12 @@ function TrimVideo({ file }: TrimVideoProp) {
             {isPlay ? (
               <>
                 <Pause className="w-4 h-4 mr-2" />
-                Pause
+                {t("pause")}
               </>
             ) : (
               <>
                 <Play className="w-4 h-4 mr-2 fill-current" />
-                Play
+                {t("play")}
               </>
             )}
           </Button>
@@ -118,6 +120,8 @@ function TrimVideo({ file }: TrimVideoProp) {
             endSeconds={endSeconds}
             startSeconds={startSeconds}
             file={file}
+            label={t("export")}
+            loadingLabel={t("exporting")}
           />
         </div>
       </div>

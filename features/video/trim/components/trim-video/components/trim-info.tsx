@@ -1,4 +1,5 @@
 import { round } from "@/lib/math";
+import { useTranslations } from "next-intl";
 import React from "react";
 
 type TrimInfoProp = {
@@ -6,6 +7,7 @@ type TrimInfoProp = {
   endSeconds: number | null;
 };
 function TrimInfo({ startSeconds, endSeconds }: TrimInfoProp) {
+  const t = useTranslations("Trim.info");
   const startTimeStr = startSeconds ?? "-";
   const endTimeStr = endSeconds ?? "-";
   const durationStr =
@@ -18,19 +20,19 @@ function TrimInfo({ startSeconds, endSeconds }: TrimInfoProp) {
     <div className="grid grid-cols-3 gap-4">
       <div className="bg-slate-900/50 rounded-lg border border-slate-700 p-4">
         <p className="text-slate-400 text-xs font-semibold uppercase tracking-wider mb-2">
-          Start Time
+          {t("start")}
         </p>
         <p className="text-2xl font-bold text-emerald-400">{startTimeStr}s</p>
       </div>
       <div className="bg-slate-900/50 rounded-lg border border-slate-700 p-4">
         <p className="text-slate-400 text-xs font-semibold uppercase tracking-wider mb-2">
-          Duration
+          {t("duration")}
         </p>
         <p className="text-2xl font-bold text-blue-400">{durationStr}s</p>
       </div>
       <div className="bg-slate-900/50 rounded-lg border border-slate-700 p-4">
         <p className="text-slate-400 text-xs font-semibold uppercase tracking-wider mb-2">
-          End Time
+          {t("end")}
         </p>
         <p className="text-2xl font-bold text-violet-400">{endTimeStr}s</p>
       </div>

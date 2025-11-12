@@ -1,0 +1,30 @@
+{
+  "Metadata": {
+    "title": "视频工具箱",
+    "description": "轻松剪辑并导出视频。"
+  },
+  "Trim": {
+    "upload": {
+      "cta": "请在此上传视频",
+      "replace": "若要选择其他视频，请点击或拖放",
+      "helper": "支持 MP4、MOV 等常见格式，仅可选择 1 个文件。"
+    },
+    "info": {
+      "start": "开始时间",
+      "duration": "时长",
+      "end": "结束时间"
+    },
+    "controls": {
+      "play": "播放",
+      "pause": "暂停",
+      "export": "导出",
+      "exporting": "导出处理中..."
+    }
+  },
+  "Home": {
+    "eyebrow": "视频工具",
+    "title": "多语言视频工作台",
+    "description": "在任意现代浏览器中剪辑、预览并导出片段。",
+    "cta": "打开剪辑工具"
+  }
+}
