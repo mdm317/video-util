@@ -25,6 +25,16 @@
     "eyebrow": "Video-Tools",
     "title": "Deine mehrsprachige Videowerkbank",
     "description": "Clips in jedem modernen Browser trimmen, prüfen und exportieren.",
-    "cta": "Trim-Tool öffnen"
+    "cta": "Trim-Tool öffnen",
+    "benefits": {
+      "browser": {
+        "title": "Videos direkt im Browser trimmen",
+        "description": "Läuft komplett im Browser – keine Installation oder Erweiterung nötig.\nDatei hochladen und sofort loslegen."
+      },
+      "security": {
+        "title": "Garantierte Sicherheit",
+        "description": "Dein Video verlässt dein Gerät nicht.\nNach dem Laden kannst du sogar offline weiterarbeiten."
+      }
+    }
   }
 }

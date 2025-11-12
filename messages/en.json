@@ -25,6 +25,16 @@
     "eyebrow": "Video tools",
     "title": "Your multilingual video workbench",
     "description": "Trim, preview and export clips from any modern browser.",
-    "cta": "Open the trim tool"
+    "cta": "Open the trim tool",
+    "benefits": {
+      "browser": {
+        "title": "Trim videos right in the browser",
+        "description": "Runs entirely in your browser—no installs or extensions required.\nJust drop a file and start trimming."
+      },
+      "security": {
+        "title": "Privacy-first processing",
+        "description": "Your video never leaves your device.\nDisconnect after loading the page and trimming still works."
+      }
+    }
   }
 }
