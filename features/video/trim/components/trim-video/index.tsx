@@ -2,7 +2,7 @@ import { useVideo } from "@/hooks/use-video";
 import { useEffect, useState } from "react";
 import { round } from "@/lib/math";
 import { Button } from "@/components/ui/button";
-import { Download, Pause, Play } from "lucide-react";
+import { Pause, Play } from "lucide-react";
 
 import {
   TimelineIndicator,
@@ -10,6 +10,7 @@ import {
   TimelineTrimmer,
 } from "@/features/video/timeline";
 import TrimInfo from "./components/trim-info";
+import DownloadTrimVideo from "./components/download-trim-video";
 
 type TrimVideoProp = {
   file: File;
@@ -34,11 +35,11 @@ function TrimVideo({ file }: TrimVideoProp) {
 
   const startSeconds = videoElement
     ? round((videoElement.duration * rangePercent[0]) / 100, 1)
-    : null;
+    : 0;
 
   const endSeconds = videoElement
     ? round((videoElement.duration * rangePercent[1]) / 100, 1)
-    : null;
+    : 0;
 
   useEffect(() => {
     if (!videoElement) {
@@ -72,6 +73,7 @@ function TrimVideo({ file }: TrimVideoProp) {
       setIsPlay(true);
     }
   };
+
   return (
     <div className="mx-auto flex w-full max-w-5xl flex-col gap-6 p-6">
       <div className="flex w-full flex-col gap-4">
@@ -112,10 +114,11 @@ function TrimVideo({ file }: TrimVideoProp) {
               </>
             )}
           </Button>
-          <Button className="flex-1 h-12 bg-amber-500 hover:bg-amber-600 text-black">
-            <Download className="w-4 h-4 mr-2" />
-            Export
-          </Button>
+          <DownloadTrimVideo
+            endSeconds={endSeconds}
+            startSeconds={startSeconds}
+            file={file}
+          />
         </div>
       </div>
     </div>
