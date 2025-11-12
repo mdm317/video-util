@@ -4,6 +4,11 @@
     "description": "轻松剪辑并导出视频。"
   },
   "Trim": {
+    "metadata": {
+      "title": "在线视频剪辑器 | Video Toolkit",
+      "description": "在浏览器中加载 MP4、MOV 等素材，设定精确的起止时间，几秒内即可私密导出。无需登录，任何数据都不会上传到服务器。",
+      "keywords": "在线视频剪辑,视频裁剪,MP4 剪辑,浏览器视频编辑,免费视频工具,免登录视频编辑,本地视频剪辑"
+    },
     "upload": {
       "cta": "请在此上传视频",
       "replace": "若要选择其他视频，请点击或拖放",
@@ -19,6 +24,10 @@
       "pause": "暂停",
       "export": "导出",
       "exporting": "导出处理中..."
+    },
+    "assurance": {
+      "noAccount": "无需登录即可使用",
+      "noUpload": "视频不会上传到服务器"
     }
   },
   "Home": {

@@ -1,12 +1,88 @@
+import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { getTranslations } from "next-intl/server";
-import { buttonVariants } from "@/components/ui/button";
 import { routing, type Locale } from "@/i18n/routing";
 
 type TrimLayoutProps = Readonly<{
   children: ReactNode;
   params: Promise<{ locale: string }>;
 }>;
+
+const createAbsoluteUrl = (path: string) => {
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
+
+  if (!siteUrl) {
+    return path;
+  }
+
+  try {
+    return new URL(path, siteUrl).toString();
+  } catch {
+    return path;
+  }
+};
+
+export async function generateMetadata({
+  params,
+}: Omit<TrimLayoutProps, "children">): Promise<Metadata> {
+  const resolvedParams = await params;
+  const locale = (resolvedParams.locale ?? routing.defaultLocale) as Locale;
+  const [trimMetadataT, siteMetadataT] = await Promise.all([
+    getTranslations({ locale, namespace: "Trim.metadata" }),
+    getTranslations({ locale, namespace: "Metadata" }),
+  ]);
+
+  const routePath = `/${locale}/trim`;
+  const keywords = trimMetadataT("keywords")
+    .split(",")
+    .map((keyword) => keyword.trim())
+    .filter(Boolean);
+  const title = trimMetadataT("title");
+  const description = trimMetadataT("description");
+  const siteName = siteMetadataT("title");
+  const languages = routing.locales.reduce<Record<string, string>>((acc, language) => {
+    acc[language] = `/${language}/trim`;
+    return acc;
+  }, {});
+  const absoluteUrl = createAbsoluteUrl(routePath);
+  const metadataBase = (() => {
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
+
+    if (!siteUrl) {
+      return undefined;
+    }
+
+    try {
+      return new URL(siteUrl);
+    } catch {
+      return undefined;
+    }
+  })();
+
+  return {
+    title,
+    description,
+    keywords,
+    metadataBase,
+    alternates: {
+      canonical: routePath,
+      languages,
+    },
+    openGraph: {
+      title,
+      description,
+      url: absoluteUrl,
+      type: "website",
+      siteName,
+      locale,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+    },
+  };
+}
 
 export default async function TrimLayout({
   children,

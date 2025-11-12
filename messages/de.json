@@ -4,6 +4,11 @@
     "description": "Videos schnell zuschneiden und exportieren."
   },
   "Trim": {
+    "metadata": {
+      "title": "Online Video Trimmer | Video Toolkit",
+      "description": "Schneide MP4-, MOV- und andere Clips direkt im Browser, lege Start- und Endpunkte exakt fest und exportiere das Ergebnis in wenigen Sekunden – ganz ohne Login und ohne dass Daten den Browser verlassen.",
+      "keywords": "online video trimmer,video zuschneiden,mp4 schneiden,browser video editor,kostenloses video tool,kein login video editor,offline video zuschneiden"
+    },
     "upload": {
       "cta": "Lade dein Video hier hoch",
       "replace": "Klicke oder ziehe, um ein anderes Video zu wählen",
@@ -19,6 +24,10 @@
       "pause": "Pause",
       "export": "Exportieren",
       "exporting": "Export läuft..."
+    },
+    "assurance": {
+      "noAccount": "Keine Anmeldung nötig",
+      "noUpload": "Video bleibt vollständig im Browser"
     }
   },
   "Home": {

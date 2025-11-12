@@ -7,7 +7,12 @@ import { useTranslations } from "next-intl";
 
 export default function CutPage() {
   const [file, setFile] = useState<File | null>(null);
-  const t = useTranslations("Trim.upload");
+  const uploadT = useTranslations("Trim.upload");
+  const assuranceT = useTranslations("Trim.assurance");
+  const assurances = ["noAccount", "noUpload"].map((key) => ({
+    key,
+    label: assuranceT(key),
+  }));
 
   if (!file) {
     return (
@@ -31,9 +36,9 @@ export default function CutPage() {
         <FileInput className="flex h-48 w-full items-center justify-center rounded-lg border border-dashed border-muted-foreground/50 bg-muted/30 text-center transition-colors hover:border-muted-foreground/80">
           <div className="flex flex-col items-center justify-center gap-2 px-6 text-sm text-muted-foreground">
             <span className="font-medium text-primary">
-              {file ? t("replace") : t("cta")}
+              {file ? uploadT("replace") : uploadT("cta")}
             </span>
-            <span className="text-xs">{t("helper")}</span>
+            <span className="text-xs text-foreground/70">{uploadT("helper")}</span>
           </div>
         </FileInput>
       </FileUploader>
