@@ -8,11 +8,6 @@ import { useTranslations } from "next-intl";
 export default function CutPage() {
   const [file, setFile] = useState<File | null>(null);
   const uploadT = useTranslations("Trim.upload");
-  const assuranceT = useTranslations("Trim.assurance");
-  const assurances = ["noAccount", "noUpload"].map((key) => ({
-    key,
-    label: assuranceT(key),
-  }));
 
   if (!file) {
     return (
