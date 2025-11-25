@@ -4,6 +4,7 @@ import { useSize } from "@/hooks/use-size";
 import React, { useEffect, useMemo, useRef } from "react";
 import { Loader } from "lucide-react";
 import { useTimelineThumbnails } from "@/features/video/timeline/api/use-timeline-thumbnails";
+import { round } from "@/lib/math";
 
 type TimeLineViewProps = {
   videoFile: File;
@@ -27,8 +28,7 @@ function TimelineView({ videoFile, videoElement }: TimeLineViewProps) {
     const thumnailWidth = (size.height * videoWidth) / videoHeight;
     const thumnailHeight = (videoHeight / videoWidth) * thumnailWidth;
     const neededFrame = Math.max(Math.ceil(size.width / thumnailWidth), 1);
-    const step = Math.ceil(duration / neededFrame);
-
+    const step = round(duration / neededFrame, 2);
     return {
       step,
       neededFrame,
