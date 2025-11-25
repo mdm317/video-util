@@ -5,7 +5,7 @@ type UseVideoReturn = {
   isPlay: boolean;
   pause: () => void;
   videoElement: HTMLVideoElement | undefined;
-  setIsPlay: (play: boolean) => void;
+  play: () => void;
   setVideoTime: (time: number) => void;
 };
 
@@ -34,11 +34,9 @@ export const useVideo = (file: File): UseVideoReturn => {
         videoElement.pause();
       }
     },
-    setIsPlay: (play: boolean) => {
-      if (play) {
-        videoElement?.play();
-      } else {
-        videoElement?.pause();
+    play: () => {
+       if (videoElement) {
+        videoElement.play();
       }
     },
     setVideoTime: (time: number) => {

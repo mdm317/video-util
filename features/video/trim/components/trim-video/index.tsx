@@ -1,6 +1,6 @@
 import { useVideo } from "@/hooks/use-video";
-import { useEffect, useState } from "react";
-import { round } from "@/lib/math";
+import { useEffect, useRef, useState } from "react";
+import { ceil, round } from "@/lib/math";
 import { Button } from "@/components/ui/button";
 import { Pause, Play } from "lucide-react";
 
@@ -17,7 +17,7 @@ type TrimVideoProp = {
   file: File;
 };
 function TrimVideo({ file }: TrimVideoProp) {
-  const { isPlay, props, videoElement, pause, setIsPlay, setVideoTime } =
+  const { isPlay, props, videoElement, pause, play, setVideoTime } =
     useVideo(file);
   const t = useTranslations("Trim.controls");
 
@@ -36,43 +36,44 @@ function TrimVideo({ file }: TrimVideoProp) {
   };
 
   const startSeconds = videoElement
-    ? round((videoElement.duration * rangePercent[0]) / 100, 1)
+    ? (videoElement.duration * rangePercent[0]) / 100
     : 0;
 
   const endSeconds = videoElement
-    ? round((videoElement.duration * rangePercent[1]) / 100, 1)
+    ? (videoElement.duration * rangePercent[1]) / 100
     : 0;
+
+  const startTime = useRef<null | number>(null);
 
   useEffect(() => {
     if (!videoElement) {
       return;
     }
-    const stopWhenEnd = () => {
-      if (!videoElement) {
-        return;
-      }
-      if (videoElement.paused) {
-        return;
-      }
-      if (endSeconds && videoElement.currentTime >= endSeconds) {
-        videoElement.pause();
-        return;
+    const stopWhenEnd: VideoFrameRequestCallback = (_, metaData) => {
+      if(metaData.mediaTime >= endSeconds){
+        videoElement.currentTime = endSeconds
+        videoElement.pause()
       }
       videoElement.requestVideoFrameCallback(stopWhenEnd);
     };
     if (isPlay) {
+      startTime.current = performance.now();
       videoElement.requestVideoFrameCallback(stopWhenEnd);
     }
   }, [endSeconds, isPlay, videoElement, setVideoTime, startSeconds]);
 
   const handlePlay = () => {
     if (isPlay) {
-      setIsPlay(false);
+      pause();
     } else {
-      if (videoElement && endSeconds && videoElement.currentTime > endSeconds) {
-        setVideoTime(startSeconds ?? 0);
+      if (
+        videoElement &&
+        endSeconds &&
+        ceil(videoElement.currentTime, 2) >= endSeconds
+      ) {
+        videoElement.currentTime = 0;
       }
-      setIsPlay(true);
+      play();
     }
   };
 
@@ -85,7 +86,10 @@ function TrimVideo({ file }: TrimVideoProp) {
           onEnded={onEnded}
           className="aspect-video w-full rounded-lg border border-muted"
         ></video>
-        <TrimInfo startSeconds={startSeconds} endSeconds={endSeconds} />
+        <TrimInfo
+          startSeconds={round(startSeconds, 1)}
+          endSeconds={round(endSeconds, 1)}
+        />
         <div className="h-14 overflow-hidden relative">
           <div className="absolute h-full w-full top-0 left-0">
             <TimelineView videoFile={file} videoElement={videoElement} />

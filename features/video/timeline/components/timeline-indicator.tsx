@@ -2,23 +2,25 @@ import { useEffect, useState } from "react";
 
 type TimelineIndicatorProp = {
   isPlay: boolean;
-  videoElement?: HTMLVideoElement
+  videoElement?: HTMLVideoElement;
 };
-function TimelineIndicator({
-  videoElement,
-  isPlay
-}: TimelineIndicatorProp) {
+function TimelineIndicator({ videoElement, isPlay }: TimelineIndicatorProp) {
   const [left, setleft] = useState(0);
 
   useEffect(() => {
     const settingLeft = () => {
-      if(!videoElement){
+      if (!videoElement) {
         return;
       }
       if (videoElement.paused) {
+        const newleft =
+          (videoElement.currentTime / videoElement.duration) * 100;
+
+        setleft(newleft);
         return;
       }
       const newleft = (videoElement.currentTime / videoElement.duration) * 100;
+
       setleft(newleft);
       requestAnimationFrame(settingLeft);
     };
@@ -26,7 +28,6 @@ function TimelineIndicator({
       requestAnimationFrame(settingLeft);
     }
   }, [isPlay, videoElement]);
-
 
   return (
     <>
