@@ -19,7 +19,6 @@ function DownloadTrimVideo({
 }: DownloadTrimVideoProp) {
   const { mutateAsync, isPending } = useTrimVideo();
   const handleDownload = () => {
-    console.log("download");
     mutateAsync({
       file,
       startSeconds: startSeconds ?? 0,

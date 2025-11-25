@@ -8,7 +8,7 @@ const MINIMUM_PERCENT = 3;
 
 type VideoTrimmerProp = {
   rangePercent: [number, number];
-  setRangePercent: (range: [number, number]) => void;
+  setRangePercent: (range: [number, number] | [number, undefined] | [undefined, number]) => void;
 };
 type DragId = "left" | "right" | "both";
 function VideoTrimmer({ rangePercent, setRangePercent }: VideoTrimmerProp) {
@@ -35,7 +35,7 @@ function VideoTrimmer({ rangePercent, setRangePercent }: VideoTrimmerProp) {
           Math.max(originRange[0] + movePercent, 0),
           originRange[1] - MINIMUM_PERCENT
         );
-        setRangePercent([newLeftPercent, originRange[1]]);
+        setRangePercent([newLeftPercent, undefined]);
         break;
       }
       case "right": {
@@ -43,7 +43,7 @@ function VideoTrimmer({ rangePercent, setRangePercent }: VideoTrimmerProp) {
           Math.min(originRange[1] + movePercent, 100),
           originRange[0] + MINIMUM_PERCENT
         );
-        setRangePercent([originRange[0], newRightPercent]);
+        setRangePercent([undefined, newRightPercent]);
         break;
       }
       case "both": {

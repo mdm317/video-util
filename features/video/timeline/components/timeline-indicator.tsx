@@ -6,7 +6,6 @@ type TimelineIndicatorProp = {
 };
 function TimelineIndicator({ videoElement, isPlay }: TimelineIndicatorProp) {
   const [left, setleft] = useState(0);
-
   useEffect(() => {
     const settingLeft = () => {
       if (!videoElement) {

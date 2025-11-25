@@ -1,5 +1,5 @@
 import { useVideo } from "@/hooks/use-video";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { ceil, round } from "@/lib/math";
 import { Button } from "@/components/ui/button";
 import { Pause, Play } from "lucide-react";
@@ -17,50 +17,60 @@ type TrimVideoProp = {
   file: File;
 };
 function TrimVideo({ file }: TrimVideoProp) {
-  const { isPlay, props, videoElement, pause, play, setVideoTime } =
-    useVideo(file);
+  const { isPlay, props, videoElement, pause, play, setVideoTime } = useVideo(
+    file,
+    {
+      onPlay: (e) => {
+        const videoElement = e.currentTarget;
+        const stopWhenEnd: VideoFrameRequestCallback = (_, metaData) => {
+          if (metaData.mediaTime >= endSeconds) {
+            videoElement.currentTime = endSeconds;
+            videoElement.pause();
+            return;
+          }
+          videoElement.requestVideoFrameCallback(stopWhenEnd);
+        };
+        videoElement.requestVideoFrameCallback(stopWhenEnd);
+      },
+      onEnded: () => {
+        setVideoTime(startSeconds ?? 0);
+      },
+    }
+  );
   const t = useTranslations("Trim.controls");
 
-  const onEnded = () => {
-    setVideoTime(startSeconds ?? 0);
-  };
-
-  const [rangePercent, setRangePercent] = useState<[number, number]>([0, 100]);
-
-  const handleChangeRange = (range: [number, number]) => {
-    setRangePercent(range);
-    if (videoElement) {
-      pause();
-      setVideoTime((range[0] * videoElement.duration) / 100);
-    }
-  };
+  const [startPercent, setStartPercent] = useState(0);
+  const [endPercent, setEndPercent] = useState(100);
 
   const startSeconds = videoElement
-    ? (videoElement.duration * rangePercent[0]) / 100
+    ? (videoElement.duration * startPercent) / 100
     : 0;
 
   const endSeconds = videoElement
-    ? (videoElement.duration * rangePercent[1]) / 100
+    ? (videoElement.duration * endPercent) / 100
     : 0;
 
-  const startTime = useRef<null | number>(null);
-
-  useEffect(() => {
-    if (!videoElement) {
-      return;
-    }
-    const stopWhenEnd: VideoFrameRequestCallback = (_, metaData) => {
-      if(metaData.mediaTime >= endSeconds){
-        videoElement.currentTime = endSeconds
-        videoElement.pause()
+  const handleChangeRange = (
+    range: [number, number] | [number, undefined] | [undefined, number]
+  ) => {
+    if (range[0] != null && range[1] != null) {
+      setStartPercent(range[0]);
+      setEndPercent(range[1]);
+      if (videoElement) {
+        setVideoTime((range[0] * videoElement.duration) / 100);
       }
-      videoElement.requestVideoFrameCallback(stopWhenEnd);
-    };
-    if (isPlay) {
-      startTime.current = performance.now();
-      videoElement.requestVideoFrameCallback(stopWhenEnd);
+    } else if (range[0] != null) {
+      setStartPercent(range[0]);
+      if (videoElement) {
+        setVideoTime((range[0] * videoElement.duration) / 100);
+      }
+    } else {
+      setEndPercent(range[1]);
+      if (videoElement) {
+        setVideoTime((range[1] * videoElement.duration) / 100);
+      }
     }
-  }, [endSeconds, isPlay, videoElement, setVideoTime, startSeconds]);
+  };
 
   const handlePlay = () => {
     if (isPlay) {
@@ -71,7 +81,7 @@ function TrimVideo({ file }: TrimVideoProp) {
         endSeconds &&
         ceil(videoElement.currentTime, 2) >= endSeconds
       ) {
-        videoElement.currentTime = 0;
+        videoElement.currentTime = startSeconds;
       }
       play();
     }
@@ -83,7 +93,6 @@ function TrimVideo({ file }: TrimVideoProp) {
         <video
           {...props}
           controls
-          onEnded={onEnded}
           className="aspect-video w-full rounded-lg border border-muted"
         ></video>
         <TrimInfo
@@ -96,7 +105,7 @@ function TrimVideo({ file }: TrimVideoProp) {
           </div>
           <div className="absolute h-full w-full top-0 left-0">
             <TimelineTrimmer
-              rangePercent={rangePercent}
+              rangePercent={[startPercent, endPercent]}
               setRangePercent={handleChangeRange}
             />
           </div>

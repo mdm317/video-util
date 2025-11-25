@@ -8,8 +8,13 @@ type UseVideoReturn = {
   play: () => void;
   setVideoTime: (time: number) => void;
 };
+type UseVideoOption = {
+  onPlay?: (e: React.SyntheticEvent<HTMLVideoElement, Event>) => void;
+  onEnded?: (e: React.SyntheticEvent<HTMLVideoElement, Event>) => void;
 
-export const useVideo = (file: File): UseVideoReturn => {
+}
+
+export const useVideo = (file: File, option:UseVideoOption): UseVideoReturn => {
   const [isPlay, setIsPlay] = useState(false);
   const [videoElement, setVideoElement] = useState<
     undefined | HTMLVideoElement
@@ -18,8 +23,9 @@ export const useVideo = (file: File): UseVideoReturn => {
   return {
     props: {
       src: videoUrl,
-      onPlay: () => {
+      onPlay: (e) => {
         setIsPlay(true);
+        option?.onPlay?.(e);
       },
       onPause: () => {
         setIsPlay(false);
@@ -27,6 +33,9 @@ export const useVideo = (file: File): UseVideoReturn => {
       onLoadedData: (e) => {
         setVideoElement(e.currentTarget);
       },
+      onEnded: (e) => {
+        option?.onEnded?.(e);
+      }
     },
     isPlay,
     pause: () => {
