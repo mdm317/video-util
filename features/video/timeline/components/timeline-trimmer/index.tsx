@@ -76,10 +76,13 @@ function VideoTrimmer({ rangePercent, setRangePercent }: VideoTrimmerProp) {
         left={rangePercent[0]}
       />
       <div
-        className={cn("absolute h-full w-fit cursor-grab")}
+        className={cn(
+          "absolute h-full z-10 cursor-grab",
+          "ring-4 ring-black bg-white/5"
+        )}
         style={{
-          left: `${rangePercent[0] + 1}%`,
-          width: `${rangePercent[1] - rangePercent[0] - 1}%`,
+          left: `${rangePercent[0]}%`,
+          width: `${rangePercent[1] - rangePercent[0]}%`,
         }}
         onMouseDown={(e: React.MouseEvent) => onMouseDown(e, "both")}
       ></div>
