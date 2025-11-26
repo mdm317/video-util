@@ -99,7 +99,7 @@ function TrimVideo({ file }: TrimVideoProp) {
           startSeconds={round(startSeconds, 1)}
           endSeconds={round(endSeconds, 1)}
         />
-        <div className="h-14 overflow-hidden relative">
+        <div className="h-28 overflow-hidden relative">
           <div className="absolute h-full w-full top-0 left-0">
             <TimelineView videoFile={file} videoElement={videoElement} />
           </div>

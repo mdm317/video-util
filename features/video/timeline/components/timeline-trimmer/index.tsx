@@ -65,6 +65,7 @@ function VideoTrimmer({ rangePercent, setRangePercent }: VideoTrimmerProp) {
     <div
       onMouseMove={onMouseMove}
       onMouseUp={onMouseUp}
+      onMouseLeave={onMouseUp}
       className="h-full w-full relative"
       ref={divRef}
     >
