@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 type VideoThumbnailProp = {
   file: File;
   mime: string;
-  step: number;
+  secondsPerFrame: number;
   neededFrame: number;
 };
 
@@ -14,7 +14,7 @@ export const useTimelineThumbnails = () => {
     mutationFn: async ({
       file,
       mime,
-      step,
+      secondsPerFrame,
       neededFrame,
     }: VideoThumbnailProp) => {
       const ffmpeg = await client.ensureQueryData(useFFmpegQueryOption);
@@ -25,25 +25,41 @@ export const useTimelineThumbnails = () => {
       }
       const inputFileName = `input.${mime.replace("video/", "")}`;
 
-      const args = ["-vf", `fps=1/${step}`, "-qscale:v", "2", "thumb_%d.png"];
-
       const arrayBuffer = await file.arrayBuffer();
       const fileData = new Uint8Array(arrayBuffer);
 
       await ffmpeg.writeFile(inputFileName, fileData);
 
-      await ffmpeg.exec(["-i", inputFileName, ...args]);
+      for (let index = 0; index < neededFrame ; index++) {
+        const args = [
+          "-ss",
+          (secondsPerFrame * (index + 1)).toString(),
+          "-i",
+          inputFileName,
+          "-frames:v",
+          "1",
+          `thumb_${index}.png`,
+        ];
+        await ffmpeg.exec(args);
+      }
 
-      const images: string[] = await Promise.all(
+
+      const list = await Promise.allSettled(
         [...new Array(neededFrame)].map(async (_, i) => {
-          const filename = `thumb_${i + 1}.png`;
+          const filename = `thumb_${i}.png`;
           const fileData = await ffmpeg.readFile(filename);
           const data = new Uint8Array(fileData as unknown as ArrayBuffer);
           const blob = new Blob([data], { type: "image/png" });
           return URL.createObjectURL(blob);
         })
       );
-      return images;
+      return list.map((item)=>{
+        if(item.status==='fulfilled'){
+          return item.value
+        }else{
+          return null;
+        }
+      })
     },
     onError: (e) => {
       console.log("e", e);

@@ -1,8 +1,8 @@
 "use client";
 
 import { useSize } from "@/hooks/use-size";
-import React, { useEffect, useMemo, useRef } from "react";
-import { Loader } from "lucide-react";
+import React, { Fragment, useEffect, useMemo, useRef } from "react";
+import { ImageOff, Loader } from "lucide-react";
 import { useTimelineThumbnails } from "@/features/video/timeline/api/use-timeline-thumbnails";
 import { round } from "@/lib/math";
 
@@ -28,9 +28,9 @@ function TimelineView({ videoFile, videoElement }: TimeLineViewProps) {
     const thumnailWidth = (size.height * videoWidth) / videoHeight;
     const thumnailHeight = (videoHeight / videoWidth) * thumnailWidth;
     const neededFrame = Math.max(Math.ceil(size.width / thumnailWidth), 1);
-    const step = round(duration / neededFrame, 2);
+    const secondsPerFrame = round(duration / neededFrame, 2);
     return {
-      step,
+      secondsPerFrame,
       neededFrame,
       width: thumnailWidth,
       height: thumnailHeight,
@@ -42,7 +42,7 @@ function TimelineView({ videoFile, videoElement }: TimeLineViewProps) {
       mutate({
         file: videoFile,
         mime: videoFile.type,
-        step: thumbnailData.step,
+        secondsPerFrame: round(thumbnailData.secondsPerFrame, 2),
         neededFrame: thumbnailData?.neededFrame,
       });
     }
@@ -55,9 +55,10 @@ function TimelineView({ videoFile, videoElement }: TimeLineViewProps) {
       return null;
     }
     if (!thumbnails) {
-      return [...new Array(thumbnailData.neededFrame)].map(() => (
+      return [...new Array(thumbnailData.neededFrame)].map((_, i) => (
         <>
           <Loader
+            key={i}
             className=""
             width={thumbnailData.width}
             height={thumbnailData.height}
@@ -67,15 +68,23 @@ function TimelineView({ videoFile, videoElement }: TimeLineViewProps) {
     }
     return (
       <>
-        {thumbnails.map((url) => (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            key={url}
-            width={thumbnailData.width}
-            height={thumbnailData.height}
-            src={url}
-            alt="thumb"
-          />
+        {thumbnails.map((url, i) => (
+          <Fragment key={i}>
+            {url ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                width={thumbnailData.width}
+                height={thumbnailData.height}
+                src={url}
+                alt="thumb"
+              />
+            ) : (
+              <ImageOff
+              width={thumbnailData.width}
+                height={thumbnailData.height}
+              />
+            )}
+          </Fragment>
         ))}
       </>
     );
