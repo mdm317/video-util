@@ -2,6 +2,7 @@ import React from "react";
 import { useTrimVideo } from "../../../api/use-trim-video";
 import { Button } from "@/components/ui/button";
 import { Download, Loader } from "lucide-react";
+import { useFFmpegProgress } from "@/features/video/store/ffmpeg-progress";
 
 type DownloadTrimVideoProp = {
   startSeconds: number;
@@ -17,7 +18,9 @@ function DownloadTrimVideo({
   label,
   loadingLabel,
 }: DownloadTrimVideoProp) {
+  const progress = useFFmpegProgress();
   const { mutateAsync, isPending } = useTrimVideo();
+  const loadingText = isPending ? progress + "%" : loadingLabel;
   const handleDownload = () => {
     mutateAsync({
       file,
@@ -44,7 +47,7 @@ function DownloadTrimVideo({
       {isPending ? (
         <>
           <Loader className="w-4 h-4 mr-2 animate-spin" />
-          {loadingLabel}
+          {loadingText}
         </>
       ) : (
         <>
