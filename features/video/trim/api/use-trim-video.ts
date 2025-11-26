@@ -25,26 +25,27 @@ export const useTrimVideo = () => {
       const inputFileName = `input.${mime.replace("video/", "")}`;
       const outputFileName = `output.${mime.replace("video/", "")}`;
 
-      const args = [
-        "-ss",
-        round(startSeconds, 3).toString(),
-        "-to",
-        round(endSeconds, 3).toString(),
-        "-c",
-        "copy",
-        outputFileName,
-      ];
-
       const arrayBuffer = await file.arrayBuffer();
       const fileData = new Uint8Array(arrayBuffer);
 
       await ffmpeg.writeFile(inputFileName, fileData);
 
-      await ffmpeg.exec(["-i", inputFileName, ...args]);
+      const args = [
+        "-ss",
+        round(startSeconds, 3).toString(),
+        "-to",
+        round(endSeconds, 3).toString(),
+        "-i",
+        inputFileName,
+        "-c",
+        "copy",
+        outputFileName,
+      ];
+      await ffmpeg.exec([...args]);
 
       const outFileData = await ffmpeg.readFile(outputFileName);
       const data = new Uint8Array(outFileData as unknown as ArrayBuffer);
-      const blob = new Blob([data], { type: "image/png" });
+      const blob = new Blob([data], { type: mime });
       return blob;
     },
     onError: (e) => {
