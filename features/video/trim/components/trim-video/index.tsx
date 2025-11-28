@@ -122,7 +122,6 @@ function TrimVideo({ file }: TrimVideoProp) {
             }}
             variant="outline"
             className="h-12 w-14 flex-none"
-            title={t("restart")}
           >
             <RotateCcw className="w-5 h-5" />
           </Button>

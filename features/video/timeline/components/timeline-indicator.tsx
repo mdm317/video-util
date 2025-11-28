@@ -41,7 +41,7 @@ function TimelineIndicator({ videoElement, isPlay }: TimelineIndicatorProp) {
           transform: "translateX(-50%)",
         }}
       >
-        <div className="w-0 h-0 border-l-[6px] border-r-[6px] border-t-[8px] border-l-transparent border-r-transparent border-t-red-500 drop-shadow-sm" />
+        <div className="w-0 h-0 border-l-[6px] border-r-[6px] border-t-8 border-l-transparent border-r-transparent border-t-red-500 drop-shadow-sm" />
         <div className="w-0.5 flex-1 bg-red-500 shadow-[0_0_4px_rgba(239,68,68,0.5)]" />
         {isPlay && (
           <div className="absolute top-full mt-2 bg-foreground text-background text-xs px-2 py-1 rounded whitespace-nowrap">
