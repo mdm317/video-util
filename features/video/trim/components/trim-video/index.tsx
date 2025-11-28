@@ -2,7 +2,7 @@ import { useVideo } from "@/hooks/use-video";
 import { useState } from "react";
 import { ceil, round } from "@/lib/math";
 import { Button } from "@/components/ui/button";
-import { Pause, Play } from "lucide-react";
+import { Pause, Play, RotateCcw } from "lucide-react";
 
 import {
   TimelineIndicator,
@@ -89,7 +89,7 @@ function TrimVideo({ file }: TrimVideoProp) {
 
   return (
     <div className="mx-auto flex w-full max-w-5xl flex-col gap-6 p-6">
-      <div className="flex w-full flex-col gap-4">
+      <div className="flex w-full flex-col gap-8">
         <video
           {...props}
           controls
@@ -99,19 +99,33 @@ function TrimVideo({ file }: TrimVideoProp) {
           startSeconds={round(startSeconds, 1)}
           endSeconds={round(endSeconds, 1)}
         />
-        <div className="h-28 relative">
-          <div className="absolute h-full w-full top-0 left-0">
+        <div className="h-28 relative pt-3">
+          <div className="absolute h-full w-full top-0 left-0 overflow-hidden">
             <TimelineView videoFile={file} videoElement={videoElement} />
           </div>
           <div className="absolute h-full w-full top-0 left-0">
             <TimelineTrimmer
               rangePercent={[startPercent, endPercent]}
               setRangePercent={handleChangeRange}
+              duration={videoElement?.duration}
             />
           </div>
           <TimelineIndicator videoElement={videoElement} isPlay={isPlay} />
         </div>
         <div className="flex gap-3">
+          <Button
+            onClick={() => {
+              if (videoElement) {
+                videoElement.currentTime = startSeconds;
+                play();
+              }
+            }}
+            variant="outline"
+            className="h-12 w-14 flex-none"
+            title={t("restart")}
+          >
+            <RotateCcw className="w-5 h-5" />
+          </Button>
           <Button
             onClick={handlePlay}
             variant="outline"

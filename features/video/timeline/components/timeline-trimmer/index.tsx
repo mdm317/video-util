@@ -2,16 +2,18 @@ import { memo, useRef, useState } from "react";
 import { useSize } from "@/hooks/use-size";
 import { Overlay } from "./components/overlay";
 import { DraggableRangeSelector } from "./components/draggable-range-selector";
-import { cn } from "@/lib/utils";
+import { cn, formatTime } from "@/lib/utils";
 
 const MINIMUM_PERCENT = 3;
 
 type VideoTrimmerProp = {
   rangePercent: [number, number];
   setRangePercent: (range: [number, number] | [number, undefined] | [undefined, number]) => void;
+  duration?: number;
 };
+
 type DragId = "left" | "right" | "both";
-function VideoTrimmer({ rangePercent, setRangePercent }: VideoTrimmerProp) {
+function VideoTrimmer({ rangePercent, setRangePercent, duration = 0 }: VideoTrimmerProp) {
   const divRef = useRef<null | HTMLDivElement>(null);
   const rect = useSize(divRef);
 
@@ -72,13 +74,14 @@ function VideoTrimmer({ rangePercent, setRangePercent }: VideoTrimmerProp) {
       <Overlay isLeft={true} widthPercent={rangePercent[0]} />
       <DraggableRangeSelector
         onMouseDown={(e: React.MouseEvent) => onMouseDown(e, "left")}
-        isLeft={true}
         left={rangePercent[0]}
+        time={formatTime((duration * rangePercent[0]) / 100)}
+        showTime={dragId === "left" || dragId === "both"}
       />
       <div
         className={cn(
           "absolute h-full z-10 cursor-grab",
-          "ring-4 ring-black bg-white/5"
+          "ring-4 ring-foreground bg-foreground/10"
         )}
         style={{
           left: `${rangePercent[0]}%`,
@@ -88,8 +91,9 @@ function VideoTrimmer({ rangePercent, setRangePercent }: VideoTrimmerProp) {
       ></div>
       <DraggableRangeSelector
         onMouseDown={(e: React.MouseEvent) => onMouseDown(e, "right")}
-        isLeft={false}
         right={100 - rangePercent[1]}
+        time={formatTime((duration * rangePercent[1]) / 100)}
+        showTime={dragId === "right" || dragId === "both"}
       />
       <Overlay isLeft={false} widthPercent={100 - rangePercent[1]} />
     </div>

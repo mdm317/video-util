@@ -18,23 +18,23 @@ function TrimInfo({ startSeconds, endSeconds }: TrimInfoProp) {
       : "-";
   return (
     <div className="grid grid-cols-3 gap-4">
-      <div className="bg-slate-900/50 rounded-lg border border-slate-700 p-4">
-        <p className="text-slate-400 text-xs font-semibold uppercase tracking-wider mb-2">
+      <div className="bg-card rounded-lg border border-border p-4 shadow-sm">
+        <p className="text-muted-foreground text-xs font-semibold uppercase tracking-wider mb-2">
           {t("start")}
         </p>
-        <p className="text-2xl font-bold text-emerald-400">{startTimeStr}s</p>
+        <p className="text-2xl font-bold text-foreground">{startTimeStr}s</p>
       </div>
-      <div className="bg-slate-900/50 rounded-lg border border-slate-700 p-4">
-        <p className="text-slate-400 text-xs font-semibold uppercase tracking-wider mb-2">
+      <div className="bg-card rounded-lg border border-border p-4 shadow-sm">
+        <p className="text-muted-foreground text-xs font-semibold uppercase tracking-wider mb-2">
           {t("duration")}
         </p>
-        <p className="text-2xl font-bold text-blue-400">{durationStr}s</p>
+        <p className="text-2xl font-bold text-foreground">{durationStr}s</p>
       </div>
-      <div className="bg-slate-900/50 rounded-lg border border-slate-700 p-4">
-        <p className="text-slate-400 text-xs font-semibold uppercase tracking-wider mb-2">
+      <div className="bg-card rounded-lg border border-border p-4 shadow-sm">
+        <p className="text-muted-foreground text-xs font-semibold uppercase tracking-wider mb-2">
           {t("end")}
         </p>
-        <p className="text-2xl font-bold text-violet-400">{endTimeStr}s</p>
+        <p className="text-2xl font-bold text-foreground">{endTimeStr}s</p>
       </div>
     </div>
   );

@@ -1,17 +1,19 @@
 import { cn } from "@/lib/utils";
 
 type DraggableRangeSelectorProp = {
-  isLeft: boolean;
   left?: number;
   right?: number;
-  onMouseDown: (e: React.MouseEvent) => void
+  onMouseDown: (e: React.MouseEvent) => void;
+  time?: string;
+  showTime?: boolean;
 };
 
 export const DraggableRangeSelector = ({
-  isLeft,
   left,
   right,
   onMouseDown,
+  time,
+  showTime,
 }: DraggableRangeSelectorProp) => {
   return (
     <div
@@ -25,11 +27,16 @@ export const DraggableRangeSelector = ({
         right: right !== undefined ? `${right}%` : undefined,
       }}
     >
+      {showTime && (
+        <div className="absolute select-none -top-8 bg-foreground text-background text-xs px-2 py-1 rounded whitespace-nowrap">
+          {time}
+        </div>
+      )}
       <div
         className={cn(
           "h-12 w-1.5 rounded-full transition-colors",
-          "bg-white shadow-sm ring-1 ring-black/10",
-          "group-hover:bg-gray-100 group-active:bg-gray-200"
+          "bg-foreground shadow-sm ring-1 ring-background",
+          "group-hover:bg-foreground/90 group-active:bg-foreground/80"
         )}
       />
     </div>
