@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from "react";
 
 const useSize = <T extends React.RefObject<HTMLDivElement | null>>(
-  target: T
+  target: T,
 ) => {
   const [size, setSize] = useState<DOMRect>();
 

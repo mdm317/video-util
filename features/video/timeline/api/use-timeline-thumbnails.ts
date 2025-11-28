@@ -30,7 +30,7 @@ export const useTimelineThumbnails = () => {
 
       await ffmpeg.writeFile(inputFileName, fileData);
 
-      for (let index = 0; index < neededFrame ; index++) {
+      for (let index = 0; index < neededFrame; index++) {
         const args = [
           "-ss",
           (secondsPerFrame * (index + 1)).toString(),
@@ -43,7 +43,6 @@ export const useTimelineThumbnails = () => {
         await ffmpeg.exec(args);
       }
 
-
       const list = await Promise.allSettled(
         [...new Array(neededFrame)].map(async (_, i) => {
           const filename = `thumb_${i}.png`;
@@ -51,15 +50,15 @@ export const useTimelineThumbnails = () => {
           const data = new Uint8Array(fileData as unknown as ArrayBuffer);
           const blob = new Blob([data], { type: "image/png" });
           return URL.createObjectURL(blob);
-        })
+        }),
       );
-      return list.map((item)=>{
-        if(item.status==='fulfilled'){
-          return item.value
-        }else{
+      return list.map((item) => {
+        if (item.status === "fulfilled") {
+          return item.value;
+        } else {
           return null;
         }
-      })
+      });
     },
     onError: (e) => {
       console.log("e", e);

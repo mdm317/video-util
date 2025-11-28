@@ -80,7 +80,7 @@ function TimelineView({ videoFile, videoElement }: TimeLineViewProps) {
               />
             ) : (
               <ImageOff
-              width={thumbnailData.width}
+                width={thumbnailData.width}
                 height={thumbnailData.height}
               />
             )}

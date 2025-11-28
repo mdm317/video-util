@@ -20,7 +20,7 @@ export const DraggableRangeSelector = ({
       onMouseDown={onMouseDown}
       className={cn(
         "absolute top-0 bottom-0 z-20 flex items-center justify-center w-4 cursor-ew-resize group outline-none",
-        "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
       )}
       style={{
         left: left !== undefined ? `${left}%` : undefined,
@@ -36,7 +36,7 @@ export const DraggableRangeSelector = ({
         className={cn(
           "h-12 w-1.5 rounded-full transition-colors",
           "bg-foreground shadow-sm ring-1 ring-background",
-          "group-hover:bg-foreground/90 group-active:bg-foreground/80"
+          "group-hover:bg-foreground/90 group-active:bg-foreground/80",
         )}
       />
     </div>

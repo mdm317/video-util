@@ -1,16 +1,17 @@
-'use client'
+"use client";
 import {
   createContext,
   PropsWithChildren,
   useContext,
-  useEffect, useState
+  useEffect,
+  useState,
 } from "react";
 import { useFFmpeg } from "../api/use-ffmpeg";
 
 type FFmpegProgressContextValue = number;
 
 const FFmpegProgressContext = createContext<FFmpegProgressContextValue | null>(
-  null
+  null,
 );
 
 export const FFmpegProgressProvider = ({ children }: PropsWithChildren) => {

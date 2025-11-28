@@ -3,9 +3,8 @@ import { cn } from "@/lib/utils";
 type OverlayProp = {
   isLeft: boolean;
   widthPercent: number;
-}
+};
 export const Overlay = ({ isLeft, widthPercent }: OverlayProp) => {
-
   return (
     <div
       className={cn(
@@ -13,13 +12,12 @@ export const Overlay = ({ isLeft, widthPercent }: OverlayProp) => {
         isLeft ? "left-0" : "right-0",
       )}
       style={{
-        width: `${widthPercent}%`
+        width: `${widthPercent}%`,
       }}
     >
       <div
         className={cn(
           "relative h-full w-full backdrop-blur-xs bg-background/80",
-
         )}
       >
         <span

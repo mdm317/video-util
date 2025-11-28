@@ -26,8 +26,6 @@ export const loadFFmpeg = async (ffmpeg: FFmpeg) => {
   });
 };
 
-
-
 // export const transcode = async (
 //   ffmpeg: FFmpeg,
 //   { fileData, args, inputFileMIME, outputFileMIME }: TranscodeProp

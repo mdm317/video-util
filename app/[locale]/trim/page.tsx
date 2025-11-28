@@ -33,7 +33,9 @@ export default function CutPage() {
             <span className="font-medium text-primary">
               {file ? uploadT("replace") : uploadT("cta")}
             </span>
-            <span className="text-xs text-foreground/70">{uploadT("helper")}</span>
+            <span className="text-xs text-foreground/70">
+              {uploadT("helper")}
+            </span>
           </div>
         </FileInput>
       </FileUploader>

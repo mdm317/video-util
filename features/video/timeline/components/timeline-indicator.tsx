@@ -15,7 +15,8 @@ function TimelineIndicator({ videoElement, isPlay }: TimelineIndicatorProp) {
         return;
       }
       if (videoElement.paused) {
-        const newleft = (videoElement.currentTime / videoElement.duration) * 100;
+        const newleft =
+          (videoElement.currentTime / videoElement.duration) * 100;
 
         setleft(newleft);
         return;

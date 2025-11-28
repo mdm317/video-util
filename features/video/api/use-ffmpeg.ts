@@ -1,7 +1,5 @@
 import { initFFmpeg, loadFFmpeg } from "@/lib/ffmpeg";
-import {
-  queryOptions, useQuery
-} from "@tanstack/react-query";
+import { queryOptions, useQuery } from "@tanstack/react-query";
 
 import { INFINITE_CACHE } from "next/dist/lib/constants";
 
@@ -24,4 +22,3 @@ export const useFFmpegQueryOption = queryOptions({
 export const useFFmpeg = () => {
   return useQuery(useFFmpegQueryOption);
 };
-

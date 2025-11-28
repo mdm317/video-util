@@ -8,12 +8,18 @@ const MINIMUM_PERCENT = 3;
 
 type VideoTrimmerProp = {
   rangePercent: [number, number];
-  setRangePercent: (range: [number, number] | [number, undefined] | [undefined, number]) => void;
+  setRangePercent: (
+    range: [number, number] | [number, undefined] | [undefined, number],
+  ) => void;
   duration?: number;
 };
 
 type DragId = "left" | "right" | "both";
-function VideoTrimmer({ rangePercent, setRangePercent, duration = 0 }: VideoTrimmerProp) {
+function VideoTrimmer({
+  rangePercent,
+  setRangePercent,
+  duration = 0,
+}: VideoTrimmerProp) {
   const divRef = useRef<null | HTMLDivElement>(null);
   const rect = useSize(divRef);
 
@@ -35,7 +41,7 @@ function VideoTrimmer({ rangePercent, setRangePercent, duration = 0 }: VideoTrim
       case "left": {
         const newLeftPercent = Math.min(
           Math.max(originRange[0] + movePercent, 0),
-          originRange[1] - MINIMUM_PERCENT
+          originRange[1] - MINIMUM_PERCENT,
         );
         setRangePercent([newLeftPercent, undefined]);
         break;
@@ -43,7 +49,7 @@ function VideoTrimmer({ rangePercent, setRangePercent, duration = 0 }: VideoTrim
       case "right": {
         const newRightPercent = Math.max(
           Math.min(originRange[1] + movePercent, 100),
-          originRange[0] + MINIMUM_PERCENT
+          originRange[0] + MINIMUM_PERCENT,
         );
         setRangePercent([undefined, newRightPercent]);
         break;
@@ -81,7 +87,7 @@ function VideoTrimmer({ rangePercent, setRangePercent, duration = 0 }: VideoTrim
       <div
         className={cn(
           "absolute h-full z-10 cursor-grab",
-          "ring-4 ring-foreground bg-foreground/10"
+          "ring-4 ring-foreground bg-foreground/10",
         )}
         style={{
           left: `${rangePercent[0]}%`,

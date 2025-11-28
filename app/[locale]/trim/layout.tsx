@@ -40,10 +40,13 @@ export async function generateMetadata({
   const title = trimMetadataT("title");
   const description = trimMetadataT("description");
   const siteName = siteMetadataT("title");
-  const languages = routing.locales.reduce<Record<string, string>>((acc, language) => {
-    acc[language] = `/${language}/trim`;
-    return acc;
-  }, {});
+  const languages = routing.locales.reduce<Record<string, string>>(
+    (acc, language) => {
+      acc[language] = `/${language}/trim`;
+      return acc;
+    },
+    {},
+  );
   const absoluteUrl = createAbsoluteUrl(routePath);
   const metadataBase = (() => {
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;

@@ -8,7 +8,5 @@ type WebProviderProps = {
 };
 const client = new QueryClient();
 export function WebProvider({ children }: WebProviderProps) {
-  return (
-    <QueryClientProvider client={client}>{children}</QueryClientProvider>
-  );
+  return <QueryClientProvider client={client}>{children}</QueryClientProvider>;
 }

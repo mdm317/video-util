@@ -35,7 +35,7 @@ function TrimVideo({ file }: TrimVideoProp) {
       onEnded: () => {
         setVideoTime(startSeconds ?? 0);
       },
-    }
+    },
   );
   const t = useTranslations("Trim.controls");
 
@@ -51,7 +51,7 @@ function TrimVideo({ file }: TrimVideoProp) {
     : 0;
 
   const handleChangeRange = (
-    range: [number, number] | [number, undefined] | [undefined, number]
+    range: [number, number] | [number, undefined] | [undefined, number],
   ) => {
     if (range[0] != null && range[1] != null) {
       setStartPercent(range[0]);
