@@ -28,9 +28,9 @@ export default function CutPage() {
         reSelect
         className="flex flex-col gap-3"
       >
-        <FileInput className="flex h-48 w-full items-center justify-center rounded-lg border border-dashed border-muted-foreground/50 bg-muted/30 text-center transition-colors hover:border-muted-foreground/80">
+        <FileInput className="flex h-64 w-full items-center justify-center rounded-xl border border-dashed border-foreground/10 bg-foreground/5 text-center transition-colors hover:border-foreground/20">
           <div className="flex flex-col items-center justify-center gap-2 px-6 text-sm text-muted-foreground">
-            <span className="font-medium text-primary">
+            <span className="font-medium text-foreground">
               {file ? uploadT("replace") : uploadT("cta")}
             </span>
             <span className="text-xs text-foreground/70">

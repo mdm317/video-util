@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { getTranslations } from "next-intl/server";
 import { routing, type Locale } from "@/i18n/routing";
+import Contact from "@/components/contact";
 
 type TrimLayoutProps = Readonly<{
   children: ReactNode;
@@ -125,6 +126,11 @@ export default async function TrimLayout({
           ))}
         </div>
       </section>
+      <div className="py-10 px-6 border-t border-foreground/5">
+        <div className="mx-auto w-full max-w-5xl">
+          <Contact />
+        </div>
+      </div>
     </div>
   );
 }

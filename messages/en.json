@@ -45,5 +45,10 @@
         "description": "Your video never leaves your device.\nDisconnect after loading the page and trimming still works."
       }
     }
+  },
+  "Contact": {
+    "title": "Contact Us",
+    "description": "Feature requests and bug reports are always welcome.",
+    "screenshot": "Sending a screenshot along with your report would be very helpful."
   }
 }
