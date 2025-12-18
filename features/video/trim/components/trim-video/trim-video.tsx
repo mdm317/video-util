@@ -1,5 +1,4 @@
 import { useVideo } from "@/hooks/use-video";
-import { useState } from "react";
 import { ceil, round } from "@/lib/math";
 import { Button } from "@/components/ui/button";
 import { Pause, Play, RotateCcw } from "lucide-react";
@@ -12,6 +11,8 @@ import {
 import TrimInfo from "./components/trim-info";
 import DownloadTrimVideo from "./components/download-trim-video";
 import { useTranslations } from "next-intl";
+import { useTrimRange } from "./hooks/use-trim-range";
+import type { TrimRangePercentPatch } from "@/features/video/trim/types";
 
 type TrimVideoProp = {
   file: File;
@@ -39,8 +40,8 @@ export function TrimVideo({ file }: TrimVideoProp) {
   );
   const t = useTranslations("Trim.controls");
 
-  const [startPercent, setStartPercent] = useState(0);
-  const [endPercent, setEndPercent] = useState(100);
+  const { startPercent, endPercent, rangePercent, setRangePercent } =
+    useTrimRange();
 
   const startSeconds = videoElement
     ? (videoElement.duration * startPercent) / 100
@@ -50,25 +51,11 @@ export function TrimVideo({ file }: TrimVideoProp) {
     ? (videoElement.duration * endPercent) / 100
     : 0;
 
-  const handleChangeRange = (
-    range: [number, number] | [number, undefined] | [undefined, number],
-  ) => {
-    if (range[0] != null && range[1] != null) {
-      setStartPercent(range[0]);
-      setEndPercent(range[1]);
-      if (videoElement) {
-        setVideoTime((range[0] * videoElement.duration) / 100);
-      }
-    } else if (range[0] != null) {
-      setStartPercent(range[0]);
-      if (videoElement) {
-        setVideoTime((range[0] * videoElement.duration) / 100);
-      }
-    } else {
-      setEndPercent(range[1]);
-      if (videoElement) {
-        setVideoTime((range[1] * videoElement.duration) / 100);
-      }
+  const handleChangeRange = (range: TrimRangePercentPatch) => {
+    setRangePercent(range);
+    if (videoElement) {
+      const seekPercent = range[0] != null ? range[0] : range[1];
+      setVideoTime((seekPercent * videoElement.duration) / 100);
     }
   };
 
@@ -105,7 +92,7 @@ export function TrimVideo({ file }: TrimVideoProp) {
           </div>
           <div className="absolute h-full w-full top-0 left-0">
             <TimelineTrimmer
-              rangePercent={[startPercent, endPercent]}
+              rangePercent={rangePercent}
               setRangePercent={handleChangeRange}
               duration={videoElement?.duration}
             />

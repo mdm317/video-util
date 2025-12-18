@@ -3,14 +3,16 @@ import { useSize } from "@/hooks/use-size";
 import { Overlay } from "./components/overlay";
 import { DraggableRangeSelector } from "./components/draggable-range-selector";
 import { cn, formatTime } from "@/lib/utils";
+import type {
+  TrimRangePercent,
+  TrimRangePercentPatch,
+} from "@/features/video/trim/types";
 
 const MINIMUM_PERCENT = 3;
 
 type VideoTrimmerProp = {
-  rangePercent: [number, number];
-  setRangePercent: (
-    range: [number, number] | [number, undefined] | [undefined, number],
-  ) => void;
+  rangePercent: TrimRangePercent;
+  setRangePercent: (range: TrimRangePercentPatch) => void;
   duration?: number;
 };
 
