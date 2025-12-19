@@ -2,7 +2,7 @@ import { memo, useRef, useState } from "react";
 import { useSize } from "@/hooks/use-size";
 import { Overlay } from "./components/overlay";
 import { DraggableRangeSelector } from "./components/draggable-range-selector";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/cn";
 import type { TrimRangePercent } from "@/features/video/trim/types";
 
 const MINIMUM_PERCENT = 3;

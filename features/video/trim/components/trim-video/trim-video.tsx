@@ -1,6 +1,6 @@
 import { useVideo } from "@/hooks/use-video";
 import { ceil, round } from "@/lib/math";
-import { formatTime } from "@/lib/utils";
+import { formatTime } from "@/lib/utils/format-time";
 import { Button } from "@/components/ui/button";
 import { Pause, Play, RotateCcw } from "lucide-react";
 
