@@ -1,18 +1,19 @@
 import { useVideo } from "@/hooks/use-video";
 import { ceil, round } from "@/lib/math";
+import { formatTime } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Pause, Play, RotateCcw } from "lucide-react";
 
 import {
   TimelineIndicator,
   TimelineView,
-  TimelineTrimmer,
+  TimelineRangeSelector,
 } from "@/features/video/timeline";
 import TrimInfo from "./components/trim-info";
 import DownloadTrimVideo from "./components/download-trim-video";
 import { useTranslations } from "next-intl";
-import { useTrimRange } from "./hooks/use-trim-range";
-import type { TrimRangePercentPatch } from "@/features/video/trim/types";
+import { useTrimRange } from "../../hooks/use-trim-range";
+import type { TrimRangePercent } from "@/features/video/trim/types";
 
 type TrimVideoProp = {
   file: File;
@@ -51,7 +52,7 @@ export function TrimVideo({ file }: TrimVideoProp) {
     ? (videoElement.duration * endPercent) / 100
     : 0;
 
-  const handleChangeRange = (range: TrimRangePercentPatch) => {
+  const handleChangeRange = (range: TrimRangePercent) => {
     setRangePercent(range);
     if (videoElement) {
       const seekPercent = range[0] != null ? range[0] : range[1];
@@ -91,10 +92,13 @@ export function TrimVideo({ file }: TrimVideoProp) {
             <TimelineView videoFile={file} videoElement={videoElement} />
           </div>
           <div className="absolute h-full w-full top-0 left-0">
-            <TimelineTrimmer
-              rangePercent={rangePercent}
-              setRangePercent={handleChangeRange}
-              duration={videoElement?.duration}
+            <TimelineRangeSelector
+              range={rangePercent}
+              onChange={handleChangeRange}
+              labels={{
+                start: formatTime(startSeconds),
+                end: formatTime(endSeconds),
+              }}
             />
           </div>
           <TimelineIndicator videoElement={videoElement} isPlay={isPlay} />

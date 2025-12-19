@@ -1,8 +1,5 @@
 import { useCallback, useState } from "react";
-import type {
-  TrimRangePercent,
-  TrimRangePercentPatch,
-} from "@/features/video/trim/types";
+import type { TrimRangePercent } from "@/features/video/trim/types";
 
 type UseTrimRangeOptions = {
   initialStartPercent?: number;
@@ -17,16 +14,8 @@ export const useTrimRange = (options: UseTrimRangeOptions = {}) => {
 
   const rangePercent: TrimRangePercent = [startPercent, endPercent];
 
-  const setRangePercent = useCallback((range: TrimRangePercentPatch) => {
-    if (range[0] != null && range[1] != null) {
-      setStartPercent(range[0]);
-      setEndPercent(range[1]);
-      return;
-    }
-    if (range[0] != null) {
-      setStartPercent(range[0]);
-      return;
-    }
+  const setRangePercent = useCallback((range: TrimRangePercent) => {
+    setStartPercent(range[0]);
     setEndPercent(range[1]);
   }, []);
 
