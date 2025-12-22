@@ -1,5 +1,6 @@
 export const formatTime = (seconds: number) => {
-  if (!Number.isFinite(seconds) || Number.isNaN(seconds) || seconds === 0) return "0s";
+  if (!Number.isFinite(seconds) || Number.isNaN(seconds) || seconds === 0)
+    return "0s";
 
   const h = Math.floor(seconds / 3600);
   const m = Math.floor((seconds % 3600) / 60);

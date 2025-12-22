@@ -1,7 +1,5 @@
-import { round } from "@/lib/math";
 import { formatTime } from "@/lib/utils/format-time";
 import { useTranslations } from "next-intl";
-import React from "react";
 
 type TrimInfoProp = {
   startSeconds: number | null;

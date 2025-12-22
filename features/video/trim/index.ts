@@ -1,3 +1,4 @@
-import TrimVideo from "./components/trim-video";
+import DownloadTrimVideo from "./components/download-trim-video";
+import TrimInfo from "./components/trim-info";
 
-export { TrimVideo };
+export { DownloadTrimVideo, TrimInfo };

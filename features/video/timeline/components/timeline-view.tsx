@@ -8,20 +8,20 @@ import { round } from "@/lib/math";
 
 type TimeLineViewProps = {
   videoFile: File;
-  videoElement?: HTMLVideoElement;
+  videoMeta?: Pick<HTMLVideoElement, "videoWidth" | "videoHeight" | "duration">;
 };
 
-function TimelineView({ videoFile, videoElement }: TimeLineViewProps) {
+function TimelineView({ videoFile, videoMeta }: TimeLineViewProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const size = useSize(containerRef);
 
   const { data: thumbnails, mutate } = useTimelineThumbnails();
 
   const thumbnailData = useMemo(() => {
-    if (!size || !videoElement) {
+    if (!size || !videoMeta) {
       return undefined;
     }
-    const { videoWidth, videoHeight, duration } = videoElement;
+    const { videoWidth, videoHeight, duration } = videoMeta;
     if (videoWidth === 0 || videoHeight === 0 || duration === 0) {
       throw Error();
     }
@@ -35,7 +35,7 @@ function TimelineView({ videoFile, videoElement }: TimeLineViewProps) {
       width: thumnailWidth,
       height: thumnailHeight,
     };
-  }, [size, videoElement]);
+  }, [size, videoMeta]);
 
   useEffect(() => {
     if (thumbnailData?.neededFrame) {

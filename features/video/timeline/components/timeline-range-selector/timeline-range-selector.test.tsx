@@ -2,7 +2,6 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import TimelineRangeSelector from "./timeline-range-selector";
 
-
 vi.mock("@/hooks/use-size", () => ({
   useSize: vi.fn(() => ({ width: 100 })),
 }));
@@ -16,10 +15,7 @@ describe("TimelineRangeSelector", () => {
 
   it("renders draggable elements", () => {
     render(
-      <TimelineRangeSelector
-        range={[10, 90]}
-        onChange={mockSetRangePercent}
-      />,
+      <TimelineRangeSelector range={[10, 90]} onChange={mockSetRangePercent} />,
     );
 
     expect(screen.getByTestId("left-drag")).toBeInTheDocument();
@@ -28,10 +24,7 @@ describe("TimelineRangeSelector", () => {
 
   it("clamps start value to 0 when dragged beyond container", () => {
     render(
-      <TimelineRangeSelector
-        range={[10, 90]}
-        onChange={mockSetRangePercent}
-      />,
+      <TimelineRangeSelector range={[10, 90]} onChange={mockSetRangePercent} />,
     );
 
     const leftDrag = screen.getByTestId("left-drag");
@@ -44,10 +37,7 @@ describe("TimelineRangeSelector", () => {
 
   it("prevents start value from exceeding end value", () => {
     render(
-      <TimelineRangeSelector
-        range={[10, 90]}
-        onChange={mockSetRangePercent}
-      />,
+      <TimelineRangeSelector range={[10, 90]} onChange={mockSetRangePercent} />,
     );
 
     const leftDrag = screen.getByTestId("left-drag");
@@ -60,10 +50,7 @@ describe("TimelineRangeSelector", () => {
 
   it("clamps end value to 100 when dragged beyond container", () => {
     render(
-      <TimelineRangeSelector
-        range={[10, 90]}
-        onChange={mockSetRangePercent}
-      />,
+      <TimelineRangeSelector range={[10, 90]} onChange={mockSetRangePercent} />,
     );
 
     const rightDrag = screen.getByTestId("right-drag");
@@ -76,10 +63,7 @@ describe("TimelineRangeSelector", () => {
 
   it("prevents end value from going below start value", () => {
     render(
-      <TimelineRangeSelector
-        range={[10, 90]}
-        onChange={mockSetRangePercent}
-      />,
+      <TimelineRangeSelector range={[10, 90]} onChange={mockSetRangePercent} />,
     );
 
     const rightDrag = screen.getByTestId("right-drag");
