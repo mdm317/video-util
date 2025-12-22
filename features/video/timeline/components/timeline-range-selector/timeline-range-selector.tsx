@@ -2,24 +2,26 @@ import { memo, useRef, useState } from "react";
 import { useSize } from "@/hooks/use-size";
 import { Overlay } from "./components/overlay";
 import { DraggableRangeSelector } from "./components/draggable-range-selector";
-import { cn, formatTime } from "@/lib/utils";
+import { cn } from "@/lib/utils/cn";
+import type { TrimRangePercent } from "@/features/video/trim/types";
 
 const MINIMUM_PERCENT = 3;
 
-type VideoTrimmerProp = {
-  rangePercent: [number, number];
-  setRangePercent: (
-    range: [number, number] | [number, undefined] | [undefined, number],
-  ) => void;
-  duration?: number;
+type TimelineRangeSelectorProp = {
+  range: TrimRangePercent;
+  onChange: (range: TrimRangePercent) => void;
+  labels?: {
+    start?: string;
+    end?: string;
+  };
 };
 
 type DragId = "left" | "right" | "both";
-function VideoTrimmer({
-  rangePercent,
-  setRangePercent,
-  duration = 0,
-}: VideoTrimmerProp) {
+function TimelineRangeSelector({
+  range,
+  onChange,
+  labels,
+}: TimelineRangeSelectorProp) {
   const divRef = useRef<null | HTMLDivElement>(null);
   const rect = useSize(divRef);
 
@@ -30,7 +32,7 @@ function VideoTrimmer({
   const onMouseDown = (e: React.MouseEvent, id: DragId) => {
     setDragId(id);
     setOriginCordinateX(e.clientX);
-    setOriginRange(rangePercent);
+    setOriginRange(range);
   };
   const onMouseMove = (e: React.MouseEvent) => {
     if (!dragId || !rect) {
@@ -43,7 +45,7 @@ function VideoTrimmer({
           Math.max(originRange[0] + movePercent, 0),
           originRange[1] - MINIMUM_PERCENT,
         );
-        setRangePercent([newLeftPercent, undefined]);
+        onChange([newLeftPercent, range[1]]);
         break;
       }
       case "right": {
@@ -51,11 +53,11 @@ function VideoTrimmer({
           Math.min(originRange[1] + movePercent, 100),
           originRange[0] + MINIMUM_PERCENT,
         );
-        setRangePercent([undefined, newRightPercent]);
+        onChange([range[0], newRightPercent]);
         break;
       }
       case "both": {
-        setRangePercent([
+        onChange([
           Math.max(originRange[0] + movePercent, 0),
           Math.min(100, originRange[1] + movePercent),
         ]);
@@ -77,11 +79,12 @@ function VideoTrimmer({
       className="h-full w-full relative"
       ref={divRef}
     >
-      <Overlay isLeft={true} widthPercent={rangePercent[0]} />
+      <Overlay isLeft={true} widthPercent={range[0]} />
       <DraggableRangeSelector
+        testId="left-drag"
         onMouseDown={(e: React.MouseEvent) => onMouseDown(e, "left")}
-        left={rangePercent[0]}
-        time={formatTime((duration * rangePercent[0]) / 100)}
+        left={range[0]}
+        time={labels?.start}
         showTime={dragId === "left" || dragId === "both"}
       />
       <div
@@ -90,20 +93,21 @@ function VideoTrimmer({
           "ring-4 ring-foreground bg-foreground/10",
         )}
         style={{
-          left: `${rangePercent[0]}%`,
-          width: `${rangePercent[1] - rangePercent[0]}%`,
+          left: `${range[0]}%`,
+          width: `${range[1] - range[0]}%`,
         }}
         onMouseDown={(e: React.MouseEvent) => onMouseDown(e, "both")}
       ></div>
       <DraggableRangeSelector
+        testId="right-drag"
         onMouseDown={(e: React.MouseEvent) => onMouseDown(e, "right")}
-        right={100 - rangePercent[1]}
-        time={formatTime((duration * rangePercent[1]) / 100)}
+        right={100 - range[1]}
+        time={labels?.end}
         showTime={dragId === "right" || dragId === "both"}
       />
-      <Overlay isLeft={false} widthPercent={100 - rangePercent[1]} />
+      <Overlay isLeft={false} widthPercent={100 - range[1]} />
     </div>
   );
 }
 
-export default memo(VideoTrimmer);
+export default memo(TimelineRangeSelector);

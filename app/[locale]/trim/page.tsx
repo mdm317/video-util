@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { FileInput, FileUploader } from "@/components/ui/file-upload";
-import { TrimVideo } from "@/features/video/trim";
 import { useTranslations } from "next-intl";
+import { TrimVideo } from "./_component/trim-video";
 
 export default function CutPage() {
   const [file, setFile] = useState<File | null>(null);

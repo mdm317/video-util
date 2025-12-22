@@ -1,8 +1,8 @@
 import React from "react";
-import { useTrimVideo } from "../../../api/use-trim-video";
 import { Button } from "@/components/ui/button";
 import { Download, Loader } from "lucide-react";
 import { useFFmpegProgress } from "@/features/video/store/ffmpeg-progress";
+import { useTrimVideo } from "../api/use-trim-video";
 
 type DownloadTrimVideoProp = {
   startSeconds: number;

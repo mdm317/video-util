@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/cn";
 
 type DraggableRangeSelectorProp = {
   left?: number;
@@ -6,6 +6,7 @@ type DraggableRangeSelectorProp = {
   onMouseDown: (e: React.MouseEvent) => void;
   time?: string;
   showTime?: boolean;
+  testId?: string;
 };
 
 export const DraggableRangeSelector = ({
@@ -14,9 +15,11 @@ export const DraggableRangeSelector = ({
   onMouseDown,
   time,
   showTime,
+  testId,
 }: DraggableRangeSelectorProp) => {
   return (
     <div
+      data-testid={testId}
       onMouseDown={onMouseDown}
       className={cn(
         "absolute top-0 bottom-0 z-20 flex items-center justify-center w-4 cursor-ew-resize group outline-none",

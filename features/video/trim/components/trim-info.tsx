@@ -1,6 +1,5 @@
-import { round } from "@/lib/math";
+import { formatTime } from "@/lib/utils/format-time";
 import { useTranslations } from "next-intl";
-import React from "react";
 
 type TrimInfoProp = {
   startSeconds: number | null;
@@ -8,33 +7,33 @@ type TrimInfoProp = {
 };
 function TrimInfo({ startSeconds, endSeconds }: TrimInfoProp) {
   const t = useTranslations("Trim.info");
-  const startTimeStr = startSeconds ?? "-";
-  const endTimeStr = endSeconds ?? "-";
-  const durationStr =
-    startSeconds != null
-      ? endSeconds != null
-        ? round(endSeconds - startSeconds, 1)
-        : "-"
-      : "-";
+  const startTimeStr = formatTime(startSeconds ?? 0);
+  const endTimeStr = formatTime(endSeconds ?? 0);
+  const durationStr = formatTime(
+    startSeconds != null && endSeconds != null
+      ? Math.max(0, endSeconds - startSeconds)
+      : 0,
+  );
+
   return (
     <div className="grid grid-cols-3 gap-4">
       <div className="bg-card rounded-lg border border-border p-4 shadow-sm">
         <p className="text-muted-foreground text-xs font-semibold uppercase tracking-wider mb-2">
           {t("start")}
         </p>
-        <p className="text-2xl font-bold text-foreground">{startTimeStr}s</p>
+        <p className="text-2xl font-bold text-foreground">{startTimeStr}</p>
       </div>
       <div className="bg-card rounded-lg border border-border p-4 shadow-sm">
         <p className="text-muted-foreground text-xs font-semibold uppercase tracking-wider mb-2">
           {t("duration")}
         </p>
-        <p className="text-2xl font-bold text-foreground">{durationStr}s</p>
+        <p className="text-2xl font-bold text-foreground">{durationStr}</p>
       </div>
       <div className="bg-card rounded-lg border border-border p-4 shadow-sm">
         <p className="text-muted-foreground text-xs font-semibold uppercase tracking-wider mb-2">
           {t("end")}
         </p>
-        <p className="text-2xl font-bold text-foreground">{endTimeStr}s</p>
+        <p className="text-2xl font-bold text-foreground">{endTimeStr}</p>
       </div>
     </div>
   );
