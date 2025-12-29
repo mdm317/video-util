@@ -27,13 +27,13 @@ export function TrimVideo({ file }: TrimVideoProp) {
 
   const [range, setRange] = useState<TrimRangePercent>([0, 100]);
   const handleChangeRange = (newRange: TrimRangePercent) => {
-    setRange(range);
+    setRange(newRange);
     if (range[0] === newRange[0]) {
-      const videoTime = (range[1] * duration) / 100;
+      const videoTime = (newRange[1] * duration) / 100;
       seek(videoTime);
       return;
     }
-    const videoTime = (range[0] * duration) / 100;
+    const videoTime = (newRange[0] * duration) / 100;
     seek(videoTime);
     return;
   };
