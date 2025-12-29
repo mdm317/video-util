@@ -4,9 +4,11 @@ import { toBlobURL } from "@ffmpeg/util";
 export const initFFmpeg = () => {
   const ffmpeg = new FFmpeg();
 
-  // ffmpeg.on("log", ({ type, message }) => {
-  //   console.log(`[${type}] ${message}`);
-  // });
+  if (process.env.NODE_ENV === "development") {
+    ffmpeg.on("log", ({ type, message }) => {
+      console.log(`[${type}] ${message}`);
+    });
+  }
 
   // ffmpeg.on("progress", ({ progress }) => {
   //   console.log(`Progress: ${(progress * 100).toFixed(1)}%`);

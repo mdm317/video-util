@@ -73,6 +73,7 @@ function TimelineRangeSelector({
 
   return (
     <div
+      data-testid="timeline-range-selector"
       onMouseMove={onMouseMove}
       onMouseUp={onMouseUp}
       onMouseLeave={onMouseUp}

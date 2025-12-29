@@ -41,6 +41,9 @@ export const useTrimVideo = () => {
         "copy",
         outputFileName,
       ];
+      if (process.env.NODE_ENV === "development") {
+        console.log("[trim-video-args]", args);
+      }
       await ffmpeg.exec([...args]);
 
       const outFileData = await ffmpeg.readFile(outputFileName);
