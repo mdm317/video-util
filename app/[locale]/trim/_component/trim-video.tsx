@@ -45,6 +45,7 @@ export function TrimVideo({ file }: TrimVideoProp) {
     onEnded: () => {
       seek(startSeconds ?? 0);
     },
+    startSeconds,
     endSeconds,
   });
   const videoElement = controls?.ref.current;
